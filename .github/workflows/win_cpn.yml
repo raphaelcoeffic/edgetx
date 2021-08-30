@@ -42,18 +42,14 @@ jobs:
         with:
           msystem: MINGW64
           update: true
-          install: git cmake mingw-w64-x86_64-toolchain
-
-      - name: Create Build Environment
-        # Some projects don't allow in-source building, so create a separate build directory
-        # We'll use this as our working directory for all subsequent commands
-        run: cmake -E make_directory ${{github.workspace}}/build
+          install: git mingw-w64-x86_64-toolchain
 
       - name: Install Dependencies
         run: |
-          pacman -S --noconfirm mingw-w64-x86_64-qt5
-          pacman -S --noconfirm mingw-w64-ucrt-x86_64-winpthreads-git
-          python -m pip install --upgrade pip Pillow
+          pacman -S --noconfirm mingw-w64-x86_64-qt5 \
+                                mingw-w64-x86_64-cmake \
+                                mingw-w64-x86_64-python-pip
+          pip install Pillow
           
       - name: Configure CMake
         working-directory: ${{github.workspace}}/build
@@ -65,7 +61,9 @@ jobs:
       - name: Build
         working-directory: ${{github.workspace}}
         # Execute the build.  You can specify a specific target with "--target <NAME>"
-        run: mkdir ${{github.workspace}}/output && tools/build-companion-nightly.sh ${{github.workspace}}  ${{github.workspace}}/output/
+        run: |
+          mkdir ${{github.workspace}}/output && \
+          tools/build-companion-nightly.sh ${{github.workspace}}  ${{github.workspace}}/output/
 
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
