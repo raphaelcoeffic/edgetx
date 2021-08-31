@@ -59,8 +59,8 @@ jobs:
         working-directory: ${{github.workspace}}
         # Execute the build.  You can specify a specific target with "--target <NAME>"
         run: |
-          mkdir ${{github.workspace}}/output && \
-          tools/build-companion-nightly.sh ${{github.workspace}}  ${{github.workspace}}/output/
+          mkdir output && \
+          tools/build-companion-nightly.sh $(pwd) $(pwd)/output/
 
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
