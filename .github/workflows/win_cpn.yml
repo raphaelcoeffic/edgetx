@@ -4,6 +4,7 @@ on:
   push:
     branches:
     - 'main'
+    - 'win-cpn'
     paths:
     - '.github/workflow/win_cpn.yml'
     - 'companion/**'
@@ -11,6 +12,7 @@ on:
   pull_request:
     branches:
     - 'main'
+    - 'win-cpn'
     paths:
     - '.github/workflow/win_cpn.yml'
     - 'companion/**'
@@ -21,6 +23,7 @@ on:
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
+  CMAKE_GENERATOR: "MSYS Makefiles"
 
 jobs:
   build:
@@ -48,7 +51,8 @@ jobs:
         run: |
           pacman -S --noconfirm mingw-w64-x86_64-qt5 \
                                 mingw-w64-x86_64-cmake \
-                                mingw-w64-x86_64-python-pip
+                                mingw-w64-x86_64-python-pip \
+                                mingw-w64-x86_64-arm-none-eabi-gcc
           pip install Pillow
           
       - name: Build
