@@ -45,7 +45,7 @@ jobs:
         with:
           msystem: MINGW64
           update: true
-          install: git mingw-w64-x86_64-toolchain
+          install: git make mingw-w64-x86_64-toolchain
 
       - name: Install Dependencies
         run: |
